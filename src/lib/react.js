@@ -5,6 +5,13 @@
  * @Last Modified time: 2021-01-15 13:59:39
  */
 
+class Component {
+  static isReactComponent = true
+  constructor(props) {
+    this.props = props
+  }
+}
+
 function reactElement(type, props) {
   const element = { type, props };
   return element;
@@ -27,6 +34,7 @@ function createElement(type, config = {}, children) {
 
 const result = {
   createElement,
+  Component
 };
 
 export default result;
