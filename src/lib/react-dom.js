@@ -2,16 +2,24 @@
  * @Author: power_840
  * @Date: 2021-01-15 13:18:36
  * @Last Modified by: power_840
- * @Last Modified time: 2021-01-15 14:03:56
+ * @Last Modified time: 2021-01-15 15:12:53
  */
 
 function render(element, parentNode) {
   console.log('parentNode', parentNode);
-  if (typeof element === 'string') {
+  if (typeof element === 'string' || typeof element === 'number') {
     return parentNode.appendChild(document.createTextNode(element));
-  } else {
-    const { type, props } = element;
+  } 
+    let type = element.type
+    let props = element.props
+    // 处理函数式组件
+    if (typeof type === 'function') {
+      let returnFunction = type(props)
+      type = returnFunction.type
+      props = returnFunction.props
+    }
     const domElement = document.createElement(type);
+
     for (let propName in props) {
       if (propName === 'className') {
         domElement.className = props[propName];
@@ -35,7 +43,6 @@ function render(element, parentNode) {
       }
     }
     parentNode.appendChild(domElement);
-  }
 }
 
 const result = {
